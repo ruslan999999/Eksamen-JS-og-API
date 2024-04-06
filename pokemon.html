@@ -109,6 +109,43 @@
                         setBackgroundColor(fetchresult);
                        
                     }
+                    async function  gettypes(){
+                 
+                 const pokmans_types= JSON.parse(localStorage.getItem("pokmans_types"));
+
+                 if(pokmans_types){
+              
+                     types= pokmans_types;
+                 } else{
+                     
+                 let res = await fetch(url_types).then(response => response.json())
+
+               
+                     types = res.results.map(item=>{
+                     var randomColor = getRandomColor();
+                         
+                      return {
+                         background:randomColor,
+                         name:item.name,
+                         url:item.url
+                      }
+                     });
+                     localStorage.setItem('pokmans_types', JSON.stringify(types));
+                 }
+                 let htmlTypes= "";
+                 let len=18;
+                 if(types.length<18){
+                     len= types.length;
+                 }
+                 
+                 for(let i=0;i<=len-1 ;i++){
+                     let name = types[i].name;
+                    
+                     htmlTypes +=`<option value="${name}">${name}</option>`
+                 }
+                 document.getElementById("filter-type").innerHTML =`<select name="type" ><option value=""></option>${htmlTypes}</select>`
+                 
+             }
     </script>
   </body>
 </html>
