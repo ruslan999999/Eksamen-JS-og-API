@@ -90,6 +90,25 @@
         pokmansContainer.innerHTML = htmlCards;
         setBackgroundColor(pokmans);
       }
+
+      async function  getAllDataFromLocal(fetchresult){
+                        pokmans=[];
+                        let htmlCards = "";
+                        let len=50;
+                        if(fetchresult.length<50){
+                            len = fetchresult.length;
+                        }
+                       for(let i=0;i<=len-1;i++){
+                        let data = fetchresult[i];
+                        pokmans.push(data);
+                        let card = getCard(data);
+                        htmlCards +=card;
+                        }
+
+                        pokmansContainer.innerHTML=(htmlCards);
+                        setBackgroundColor(fetchresult);
+                       
+                    }
     </script>
   </body>
 </html>
