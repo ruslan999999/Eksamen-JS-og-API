@@ -45,6 +45,16 @@
         </div>
       
       </div>
-    
+      
+    <script>
+        const url = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=50"; 
+        const url_types = "https://pokeapi.co/api/v2/type/"; 
+        let pokmansContainer =document.getElementById("pokmans"); 
+        let pokmans=[];
+        let types=[];
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlFilterType = urlParams.get('type');
+        
+    </script>
 </body>
 </html>
