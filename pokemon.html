@@ -54,6 +54,17 @@
         let types=[];
         const urlParams = new URLSearchParams(window.location.search);
         const urlFilterType = urlParams.get('type');
+
+        if(urlFilterType){
+            getFilterData(urlFilterType) 
+        }else{
+            if(JSON.parse(localStorage.getItem("pokmans")))
+            getAllDataFromLocal(JSON.parse(localStorage.getItem("pokmans")));
+        else
+        getAllData();
+    }
+    gettypes();
+    ModalForCreatePokman();
         
     </script>
 </body>
