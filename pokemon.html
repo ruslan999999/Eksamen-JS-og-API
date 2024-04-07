@@ -170,6 +170,18 @@
                                 }
                                 return color;
                         }
+
+                        function setBackgroundColor(allpockmans){
+                            let types =  JSON.parse(localStorage.getItem("pokmans_types"));
+                            let len = 50;
+                            if(allpockmans.length<50){
+                                len = allpockmans.length;
+                            }
+                            for(let i=0;i<=len-1;i++){
+                              console.log("allpockmans[i].type",allpockmans[i].type,allpockmans[i].name)
+                             document.getElementById("pockman"+allpockmans[i].id).style.background = types.find(item=>item.name==allpockmans[i].type.name).background
+                            }
+                        }
     </script>
   </body>
 </html>
