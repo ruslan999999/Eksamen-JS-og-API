@@ -242,6 +242,36 @@
                         setBackgroundColor(pokmans);
                         
                     }
+
+                    function ModalForCreatePokman(){
+                        var modal = document.getElementById("myModal");
+
+                        var btn = document.getElementById("myBtn");
+
+                    
+                        var span = document.getElementsByClassName("close")[0];
+
+                        btn.onclick = function() {
+                        modal.style.display = "block";
+                        let htmlTypes= "";
+                        for(let i=0;i<=types.length-1 ;i++){
+                            let name = types[i].name;
+                            htmlTypes +=`<option value="${name}">${name}</option>`
+                        }
+                        document.getElementById("create-type-section").innerHTML =`<label>Type:</label><select id="create-type" name="type" ><option value=""></option>${htmlTypes}</select>`
+                        
+                        }
+
+                        span.onclick = function() {
+                        modal.style.display = "none";
+                        }
+
+                        window.onclick = function(event) {
+                        if (event.target == modal) {
+                            modal.style.display = "none";
+                        }
+                        }
+                    }
     </script>
   </body>
 </html>
