@@ -146,6 +146,22 @@
                  document.getElementById("filter-type").innerHTML =`<select name="type" ><option value=""></option>${htmlTypes}</select>`
                  
              }
+
+             function getCard(item){
+                        return `<div id="pockman${item.id}" class="pokman">
+                            <img src='${item.image}' />
+                        <div class="section-title">
+                            <h1>name:${item.name}</h1>
+                            <span>type:${item.type.name}</span>
+                            </div>
+                            <div class="actionButton">
+                                <button onclick="save('${item.id}')"  class="save">save</button>
+                                <button  onclick="edit('${item.id}')"   class="edit">edit</button>
+                                <button  onclick="deleteItem('${item.id}')"  class="delete">delete</button>
+                                </div>
+                        </div>`;
+                                     
+                    }
     </script>
   </body>
 </html>
