@@ -271,6 +271,65 @@
                         }
                         }
                     }
+
+                    function createPokman(id){
+                        let local_poks =  JSON.parse(localStorage.getItem("pokmans")); 
+                
+                        let pokmans_favorite =  JSON.parse(localStorage.getItem("pokmans_favorite")); 
+                        var modal = document.getElementById("myModal");
+                
+                        if(id==0){
+                          
+                            const data = {
+                                id:new Date().getTime(),
+                                image:"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/6.png",
+                                name :  document.getElementById("create-name").value,
+                               type : types.find(item=>item.name==  document.getElementById("create-type").value)
+
+                            }
+                            pokmans= [data,...pokmans];
+                            local_poks= [data,...local_poks];
+                   
+                    }else{
+                 
+                        const pokman = pokmans.find(item=>item.id==id);
+             
+                        const index = pokmans.findIndex(item=>item.id==id);
+                        const index_all = local_poks.findIndex(item=>item.id==id);
+                    
+                        const index_fav = pokmans.findIndex(item=>item.id==id);
+                        const data = {
+                                id:pokman.id,
+                                image:pokman.image,
+                                name :  document.getElementById("create-name").value,
+                               type : types.find(item=>item.name==  document.getElementById("create-type").value)
+
+                            }
+                            pokmans[index]= data;
+                            local_poks[index_all]= data;
+                 
+                            if(index_fav>-1)
+                            pokmans_favorite[index_fav]= data;
+                    }
+
+                    let htmlCards = "";
+                   
+                        for(let i=0;i<=pokmans.length-1;i++){
+                         let data = pokmans[i];
+                          
+                        let card =getCard(data);
+                         htmlCards +=card;
+                         }
+         
+                         pokmansContainer.innerHTML=(htmlCards);
+                         setBackgroundColor(pokmans);
+                   
+                         localStorage.setItem('pokmans', JSON.stringify(local_poks));
+ 
+                         localStorage.setItem('pokmans_favorite', JSON.stringify(pokmans_favorite));
+    
+                            modal.style.display = "none";
+                        }
     </script>
   </body>
 </html>
