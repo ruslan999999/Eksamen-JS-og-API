@@ -385,6 +385,48 @@
 
                  getAllDataFromLocal(fetchresult);
                }
+
+               function deleteItem(id){
+               
+               const pokmans_all= JSON.parse(localStorage.getItem("pokmans")); 
+        
+               const pokmans_favorite= JSON.parse(localStorage.getItem("pokmans_favorite")); 
+           
+               if(pokmans_all){
+          
+               const isExistData = pokmans_all.find(item=>item.id==id);
+               if(isExistData){
+              
+                   localStorage.setItem('pokmans', JSON.stringify(pokmans_all.filter(item=>item.id!=id)));
+                   alert("deleted")
+               }
+
+               }
+   
+               if(pokmans_favorite){
+                
+               const isExistData2 = pokmans_favorite.find(item=>item.id==id);
+               if(isExistData2){
+               
+                   localStorage.setItem('pokmans_favorite', JSON.stringify(pokmans_favorite.filter(item=>item.id!=id)));
+                  
+               }
+
+               }
+
+               pokmans = pokmans.filter(item=>item.id!=id);
+               let htmlCards = "";
+               
+              for(let i=0;i<=pokmans.length-1;i++){
+               let data = pokmans[i];
+                
+              let card =getCard(data);
+               htmlCards +=card;
+               }
+               pokmansContainer.innerHTML=(htmlCards);
+               setBackgroundColor(pokmans);
+        
+           }
     </script>
   </body>
 </html>
