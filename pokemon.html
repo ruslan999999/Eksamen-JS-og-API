@@ -359,6 +359,32 @@
                    }
             
                }
+               function changeTab(tab){
+                 
+                 let all_tab = document.getElementById("tab-all");
+               
+                 let saved_tab = document.getElementById("tab-saved");
+              
+                 let fetchresult =  JSON.parse(localStorage.getItem("pokmans")); 
+                
+                 if(tab=="all"){
+             
+                   all_tab.style.background = "blue";
+                   all_tab.style.color = "white";
+                   saved_tab.style.background = "white";
+                   saved_tab.style.color = "black";
+                 }else{
+                    
+                   saved_tab.style.background = "blue";
+                   saved_tab.style.color = "white";
+                   all_tab.style.background = "white";
+                   all_tab.style.color = "black";
+              
+                   fetchresult =  JSON.parse(localStorage.getItem("pokmans_favorite")); 
+                 }
+
+                 getAllDataFromLocal(fetchresult);
+               }
     </script>
   </body>
 </html>
