@@ -330,6 +330,35 @@
     
                             modal.style.display = "none";
                         }
+                        function save(id){    
+                   
+                   const pokmans_saved= JSON.parse(localStorage.getItem("pokmans_favorite")); 
+       
+                   const data = pokmans.find(item=>item.id==id);
+                  
+                   if(pokmans_saved){
+                
+                   const isExistData = pokmans_saved.find(item=>item.id==id);
+                   if(isExistData){
+                       alert("already saved")
+                   }else{
+                    
+                       pokmans_saved.push(data);
+           
+                       localStorage.setItem('pokmans_favorite', JSON.stringify(pokmans_saved));
+                       alert(" saved successfully")
+                   }
+
+                   }else{
+                       const list= [];
+                     
+                       list.push(data);
+                 
+                       localStorage.setItem('pokmans_favorite', JSON.stringify(list));
+                       alert(" saved successfully")
+                   }
+            
+               }
     </script>
   </body>
 </html>
