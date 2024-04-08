@@ -91,64 +91,60 @@
         setBackgroundColor(pokmans);
       }
 
-      async function  getAllDataFromLocal(fetchresult){
-                        pokmans=[];
-                        let htmlCards = "";
-                        let len=50;
-                        if(fetchresult.length<50){
-                            len = fetchresult.length;
-                        }
-                       for(let i=0;i<=len-1;i++){
-                        let data = fetchresult[i];
-                        pokmans.push(data);
-                        let card = getCard(data);
-                        htmlCards +=card;
-                        }
+      async function getAllDataFromLocal(fetchresult) {
+        pokmans = [];
+        let htmlCards = "";
+        let len = 50;
+        if (fetchresult.length < 50) {
+          len = fetchresult.length;
+        }
+        for (let i = 0; i <= len - 1; i++) {
+          let data = fetchresult[i];
+          pokmans.push(data);
+          let card = getCard(data);
+          htmlCards += card;
+        }
 
-                        pokmansContainer.innerHTML=(htmlCards);
-                        setBackgroundColor(fetchresult);
-                       
-                    }
-                    async function  gettypes(){
-                 
-                 const pokmans_types= JSON.parse(localStorage.getItem("pokmans_types"));
+        pokmansContainer.innerHTML = htmlCards;
+        setBackgroundColor(fetchresult);
+      }
+      async function gettypes() {
+        const pokmans_types = JSON.parse(localStorage.getItem("pokmans_types"));
 
-                 if(pokmans_types){
-              
-                     types= pokmans_types;
-                 } else{
-                     
-                 let res = await fetch(url_types).then(response => response.json())
+        if (pokmans_types) {
+          types = pokmans_types;
+        } else {
+          let res = await fetch(url_types).then((response) => response.json());
 
-               
-                     types = res.results.map(item=>{
-                     var randomColor = getRandomColor();
-                         
-                      return {
-                         background:randomColor,
-                         name:item.name,
-                         url:item.url
-                      }
-                     });
-                     localStorage.setItem('pokmans_types', JSON.stringify(types));
-                 }
-                 let htmlTypes= "";
-                 let len=18;
-                 if(types.length<18){
-                     len= types.length;
-                 }
-                 
-                 for(let i=0;i<=len-1 ;i++){
-                     let name = types[i].name;
-                    
-                     htmlTypes +=`<option value="${name}">${name}</option>`
-                 }
-                 document.getElementById("filter-type").innerHTML =`<select name="type" ><option value=""></option>${htmlTypes}</select>`
-                 
-             }
+          types = res.results.map((item) => {
+            var randomColor = getRandomColor();
 
-             function getCard(item){
-                        return `<div id="pockman${item.id}" class="pokman">
+            return {
+              background: randomColor,
+              name: item.name,
+              url: item.url,
+            };
+          });
+          localStorage.setItem("pokmans_types", JSON.stringify(types));
+        }
+        let htmlTypes = "";
+        let len = 18;
+        if (types.length < 18) {
+          len = types.length;
+        }
+
+        for (let i = 0; i <= len - 1; i++) {
+          let name = types[i].name;
+
+          htmlTypes += `<option value="${name}">${name}</option>`;
+        }
+        document.getElementById(
+          "filter-type"
+        ).innerHTML = `<select name="type" ><option value=""></option>${htmlTypes}</select>`;
+      }
+
+      function getCard(item) {
+        return `<div id="pockman${item.id}" class="pokman">
                             <img src='${item.image}' />
                         <div class="section-title">
                             <h1>name:${item.name}</h1>
@@ -160,273 +156,308 @@
                                 <button  onclick="deleteItem('${item.id}')"  class="delete">delete</button>
                                 </div>
                         </div>`;
-                                     
-                    }
-                    function getRandomColor() {
-                                var letters = '0123456789ABCDEF';
-                                var color = '#';
-                                for (var i = 0; i < 6; i++) {
-                                    color += letters[Math.floor(Math.random() * 16)];
-                                }
-                                return color;
-                        }
+      }
+      function getRandomColor() {
+        var letters = "0123456789ABCDEF";
+        var color = "#";
+        for (var i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+      }
 
-                        function setBackgroundColor(allpockmans){
-                            let types =  JSON.parse(localStorage.getItem("pokmans_types"));
-                            let len = 50;
-                            if(allpockmans.length<50){
-                                len = allpockmans.length;
-                            }
-                            for(let i=0;i<=len-1;i++){
-                              console.log("allpockmans[i].type",allpockmans[i].type,allpockmans[i].name)
-                             document.getElementById("pockman"+allpockmans[i].id).style.background = types.find(item=>item.name==allpockmans[i].type.name).background
-                            }
-                        }
+      function setBackgroundColor(allpockmans) {
+        let types = JSON.parse(localStorage.getItem("pokmans_types"));
+        let len = 50;
+        if (allpockmans.length < 50) {
+          len = allpockmans.length;
+        }
+        for (let i = 0; i <= len - 1; i++) {
+          console.log(
+            "allpockmans[i].type",
+            allpockmans[i].type,
+            allpockmans[i].name
+          );
+          document.getElementById(
+            "pockman" + allpockmans[i].id
+          ).style.background = types.find(
+            (item) => item.name == allpockmans[i].type.name
+          ).background;
+        }
+      }
 
-                        async function  getFilterData(type){
-                        let fetchresult =  JSON.parse(localStorage.getItem("pokmans")); 
-                        let res = await fetch(url_types+type).then(response => response.json())
-                        let pokemon = res.pokemon;
-                      
-                         let fetchresult2 = fetchresult.filter(item=>item.type.name==type);
-                         for(let i=0;i<=fetchresult2.length-1;i++){
-                        let data = fetchresult2[i];
-                        pokmans.push(data);
-            
-                        }
-                        let htmlCards = "";
-                        let len=50;
-                        if(pokemon.length<50){
-                            len = pokemon.length;
-                        }
+      async function getFilterData(type) {
+        let fetchresult = JSON.parse(localStorage.getItem("pokmans"));
+        let res = await fetch(url_types + type).then((response) =>
+          response.json()
+        );
+        let pokemon = res.pokemon;
 
-                       for(let i=0;i<=len-1;i++){
-                        let item = pokemon[i].pokemon;
-                        let newdata = await fetch(item.url).then(response => response.json());
-                       
-                       let data= {
-                          id:newdata.id,
-                          image:newdata.sprites.other.home.front_default,
-                          name :newdata.name,
-                          url:item.url,
-                          type : {name:type,url:url_types+type}
-                      }
-                      
-                        let data2 = pokmans.find(item2=>item2.name==data.name);
-                        let data3 = fetchresult.find(item2=>(item2.name==data.name && item2.type.name!=type));
-                        if(!data2){
-                            pokmans.push(data);
-                            fetchresult.push(data);
-                        }
-                      
-                        if(data3)
-                        pokmans.push({...data3,type:data.type});
-                      
-                        }
+        let fetchresult2 = fetchresult.filter((item) => item.type.name == type);
+        for (let i = 0; i <= fetchresult2.length - 1; i++) {
+          let data = fetchresult2[i];
+          pokmans.push(data);
+        }
+        let htmlCards = "";
+        let len = 50;
+        if (pokemon.length < 50) {
+          len = pokemon.length;
+        }
 
-                        len = 50;
-                        if(pokmans.length<50)
-                        len = pokmans.length;
+        for (let i = 0; i <= len - 1; i++) {
+          let item = pokemon[i].pokemon;
+          let newdata = await fetch(item.url).then((response) =>
+            response.json()
+          );
 
-                         pokmans.length =len;
-                         for(let i=0;i<=len-1;i++){
-                        let data = pokmans[i];
-                        console.log()
-                       
-                        let card = getCard(data);
-                        htmlCards +=card;
-                        }
-                        localStorage.setItem('pokmans', JSON.stringify(fetchresult));
-                        pokmansContainer.innerHTML=(htmlCards);
-                        setBackgroundColor(pokmans);
-                        
-                    }
+          let data = {
+            id: newdata.id,
+            image: newdata.sprites.other.home.front_default,
+            name: newdata.name,
+            url: item.url,
+            type: { name: type, url: url_types + type },
+          };
 
-                    function ModalForCreatePokman(){
-                        var modal = document.getElementById("myModal");
+          let data2 = pokmans.find((item2) => item2.name == data.name);
+          let data3 = fetchresult.find(
+            (item2) => item2.name == data.name && item2.type.name != type
+          );
+          if (!data2) {
+            pokmans.push(data);
+            fetchresult.push(data);
+          }
 
-                        var btn = document.getElementById("myBtn");
+          if (data3) pokmans.push({ ...data3, type: data.type });
+        }
 
-                    
-                        var span = document.getElementsByClassName("close")[0];
+        len = 50;
+        if (pokmans.length < 50) len = pokmans.length;
 
-                        btn.onclick = function() {
-                        modal.style.display = "block";
-                        let htmlTypes= "";
-                        for(let i=0;i<=types.length-1 ;i++){
-                            let name = types[i].name;
-                            htmlTypes +=`<option value="${name}">${name}</option>`
-                        }
-                        document.getElementById("create-type-section").innerHTML =`<label>Type:</label><select id="create-type" name="type" ><option value=""></option>${htmlTypes}</select>`
-                        
-                        }
+        pokmans.length = len;
+        for (let i = 0; i <= len - 1; i++) {
+          let data = pokmans[i];
+          console.log();
 
-                        span.onclick = function() {
-                        modal.style.display = "none";
-                        }
+          let card = getCard(data);
+          htmlCards += card;
+        }
+        localStorage.setItem("pokmans", JSON.stringify(fetchresult));
+        pokmansContainer.innerHTML = htmlCards;
+        setBackgroundColor(pokmans);
+      }
 
-                        window.onclick = function(event) {
-                        if (event.target == modal) {
-                            modal.style.display = "none";
-                        }
-                        }
-                    }
+      function ModalForCreatePokman() {
+        var modal = document.getElementById("myModal");
 
-                    function createPokman(id){
-                        let local_poks =  JSON.parse(localStorage.getItem("pokmans")); 
-                
-                        let pokmans_favorite =  JSON.parse(localStorage.getItem("pokmans_favorite")); 
-                        var modal = document.getElementById("myModal");
-                
-                        if(id==0){
-                          
-                            const data = {
-                                id:new Date().getTime(),
-                                image:"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/6.png",
-                                name :  document.getElementById("create-name").value,
-                               type : types.find(item=>item.name==  document.getElementById("create-type").value)
+        var btn = document.getElementById("myBtn");
 
-                            }
-                            pokmans= [data,...pokmans];
-                            local_poks= [data,...local_poks];
-                   
-                    }else{
-                 
-                        const pokman = pokmans.find(item=>item.id==id);
-             
-                        const index = pokmans.findIndex(item=>item.id==id);
-                        const index_all = local_poks.findIndex(item=>item.id==id);
-                    
-                        const index_fav = pokmans.findIndex(item=>item.id==id);
-                        const data = {
-                                id:pokman.id,
-                                image:pokman.image,
-                                name :  document.getElementById("create-name").value,
-                               type : types.find(item=>item.name==  document.getElementById("create-type").value)
+        var span = document.getElementsByClassName("close")[0];
 
-                            }
-                            pokmans[index]= data;
-                            local_poks[index_all]= data;
-                 
-                            if(index_fav>-1)
-                            pokmans_favorite[index_fav]= data;
-                    }
+        btn.onclick = function () {
+          modal.style.display = "block";
+          let htmlTypes = "";
+          for (let i = 0; i <= types.length - 1; i++) {
+            let name = types[i].name;
+            htmlTypes += `<option value="${name}">${name}</option>`;
+          }
+          document.getElementById(
+            "create-type-section"
+          ).innerHTML = `<label>Type:</label><select id="create-type" name="type" ><option value=""></option>${htmlTypes}</select>`;
+        };
 
-                    let htmlCards = "";
-                   
-                        for(let i=0;i<=pokmans.length-1;i++){
-                         let data = pokmans[i];
-                          
-                        let card =getCard(data);
-                         htmlCards +=card;
-                         }
-         
-                         pokmansContainer.innerHTML=(htmlCards);
-                         setBackgroundColor(pokmans);
-                   
-                         localStorage.setItem('pokmans', JSON.stringify(local_poks));
- 
-                         localStorage.setItem('pokmans_favorite', JSON.stringify(pokmans_favorite));
-    
-                            modal.style.display = "none";
-                        }
-                        function save(id){    
-                   
-                   const pokmans_saved= JSON.parse(localStorage.getItem("pokmans_favorite")); 
-       
-                   const data = pokmans.find(item=>item.id==id);
-                  
-                   if(pokmans_saved){
-                
-                   const isExistData = pokmans_saved.find(item=>item.id==id);
-                   if(isExistData){
-                       alert("already saved")
-                   }else{
-                    
-                       pokmans_saved.push(data);
-           
-                       localStorage.setItem('pokmans_favorite', JSON.stringify(pokmans_saved));
-                       alert(" saved successfully")
-                   }
+        span.onclick = function () {
+          modal.style.display = "none";
+        };
 
-                   }else{
-                       const list= [];
-                     
-                       list.push(data);
-                 
-                       localStorage.setItem('pokmans_favorite', JSON.stringify(list));
-                       alert(" saved successfully")
-                   }
-            
-               }
-               function changeTab(tab){
-                 
-                 let all_tab = document.getElementById("tab-all");
-               
-                 let saved_tab = document.getElementById("tab-saved");
-              
-                 let fetchresult =  JSON.parse(localStorage.getItem("pokmans")); 
-                
-                 if(tab=="all"){
-             
-                   all_tab.style.background = "blue";
-                   all_tab.style.color = "white";
-                   saved_tab.style.background = "white";
-                   saved_tab.style.color = "black";
-                 }else{
-                    
-                   saved_tab.style.background = "blue";
-                   saved_tab.style.color = "white";
-                   all_tab.style.background = "white";
-                   all_tab.style.color = "black";
-              
-                   fetchresult =  JSON.parse(localStorage.getItem("pokmans_favorite")); 
-                 }
+        window.onclick = function (event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        };
+      }
 
-                 getAllDataFromLocal(fetchresult);
-               }
+      function createPokman(id) {
+        let local_poks = JSON.parse(localStorage.getItem("pokmans"));
 
-               function deleteItem(id){
-               
-               const pokmans_all= JSON.parse(localStorage.getItem("pokmans")); 
-        
-               const pokmans_favorite= JSON.parse(localStorage.getItem("pokmans_favorite")); 
-           
-               if(pokmans_all){
-          
-               const isExistData = pokmans_all.find(item=>item.id==id);
-               if(isExistData){
-              
-                   localStorage.setItem('pokmans', JSON.stringify(pokmans_all.filter(item=>item.id!=id)));
-                   alert("deleted")
-               }
+        let pokmans_favorite = JSON.parse(
+          localStorage.getItem("pokmans_favorite")
+        );
+        var modal = document.getElementById("myModal");
 
-               }
-   
-               if(pokmans_favorite){
-                
-               const isExistData2 = pokmans_favorite.find(item=>item.id==id);
-               if(isExistData2){
-               
-                   localStorage.setItem('pokmans_favorite', JSON.stringify(pokmans_favorite.filter(item=>item.id!=id)));
-                  
-               }
+        if (id == 0) {
+          const data = {
+            id: new Date().getTime(),
+            image:
+              "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/6.png",
+            name: document.getElementById("create-name").value,
+            type: types.find(
+              (item) =>
+                item.name == document.getElementById("create-type").value
+            ),
+          };
+          pokmans = [data, ...pokmans];
+          local_poks = [data, ...local_poks];
+        } else {
+          const pokman = pokmans.find((item) => item.id == id);
 
-               }
+          const index = pokmans.findIndex((item) => item.id == id);
+          const index_all = local_poks.findIndex((item) => item.id == id);
 
-               pokmans = pokmans.filter(item=>item.id!=id);
-               let htmlCards = "";
-               
-              for(let i=0;i<=pokmans.length-1;i++){
-               let data = pokmans[i];
-                
-              let card =getCard(data);
-               htmlCards +=card;
-               }
-               pokmansContainer.innerHTML=(htmlCards);
-               setBackgroundColor(pokmans);
-        
-           }
+          const index_fav = pokmans.findIndex((item) => item.id == id);
+          const data = {
+            id: pokman.id,
+            image: pokman.image,
+            name: document.getElementById("create-name").value,
+            type: types.find(
+              (item) =>
+                item.name == document.getElementById("create-type").value
+            ),
+          };
+          pokmans[index] = data;
+          local_poks[index_all] = data;
+
+          if (index_fav > -1) pokmans_favorite[index_fav] = data;
+        }
+
+        let htmlCards = "";
+
+        for (let i = 0; i <= pokmans.length - 1; i++) {
+          let data = pokmans[i];
+
+          let card = getCard(data);
+          htmlCards += card;
+        }
+
+        pokmansContainer.innerHTML = htmlCards;
+        setBackgroundColor(pokmans);
+
+        localStorage.setItem("pokmans", JSON.stringify(local_poks));
+
+        localStorage.setItem(
+          "pokmans_favorite",
+          JSON.stringify(pokmans_favorite)
+        );
+
+        modal.style.display = "none";
+      }
+      function save(id) {
+        const pokmans_saved = JSON.parse(
+          localStorage.getItem("pokmans_favorite")
+        );
+
+        const data = pokmans.find((item) => item.id == id);
+
+        if (pokmans_saved) {
+          const isExistData = pokmans_saved.find((item) => item.id == id);
+          if (isExistData) {
+            alert("already saved");
+          } else {
+            pokmans_saved.push(data);
+
+            localStorage.setItem(
+              "pokmans_favorite",
+              JSON.stringify(pokmans_saved)
+            );
+            alert(" saved successfully");
+          }
+        } else {
+          const list = [];
+
+          list.push(data);
+
+          localStorage.setItem("pokmans_favorite", JSON.stringify(list));
+          alert(" saved successfully");
+        }
+      }
+      function changeTab(tab) {
+        let all_tab = document.getElementById("tab-all");
+
+        let saved_tab = document.getElementById("tab-saved");
+
+        let fetchresult = JSON.parse(localStorage.getItem("pokmans"));
+
+        if (tab == "all") {
+          all_tab.style.background = "blue";
+          all_tab.style.color = "white";
+          saved_tab.style.background = "white";
+          saved_tab.style.color = "black";
+        } else {
+          saved_tab.style.background = "blue";
+          saved_tab.style.color = "white";
+          all_tab.style.background = "white";
+          all_tab.style.color = "black";
+
+          fetchresult = JSON.parse(localStorage.getItem("pokmans_favorite"));
+        }
+
+        getAllDataFromLocal(fetchresult);
+      }
+
+      function deleteItem(id) {
+        const pokmans_all = JSON.parse(localStorage.getItem("pokmans"));
+
+        const pokmans_favorite = JSON.parse(
+          localStorage.getItem("pokmans_favorite")
+        );
+
+        if (pokmans_all) {
+          const isExistData = pokmans_all.find((item) => item.id == id);
+          if (isExistData) {
+            localStorage.setItem(
+              "pokmans",
+              JSON.stringify(pokmans_all.filter((item) => item.id != id))
+            );
+            alert("deleted");
+          }
+        }
+
+        if (pokmans_favorite) {
+          const isExistData2 = pokmans_favorite.find((item) => item.id == id);
+          if (isExistData2) {
+            localStorage.setItem(
+              "pokmans_favorite",
+              JSON.stringify(pokmans_favorite.filter((item) => item.id != id))
+            );
+          }
+        }
+
+        pokmans = pokmans.filter((item) => item.id != id);
+        let htmlCards = "";
+
+        for (let i = 0; i <= pokmans.length - 1; i++) {
+          let data = pokmans[i];
+
+          let card = getCard(data);
+          htmlCards += card;
+        }
+        pokmansContainer.innerHTML = htmlCards;
+        setBackgroundColor(pokmans);
+      }
+      function edit(id) {
+        var modal = document.getElementById("myModal");
+
+        const data = pokmans.find((item) => item.id == id);
+
+        modal.style.display = "block";
+        let htmlTypes = "";
+
+        for (let i = 0; i <= types.length - 1; i++) {
+          let name = types[i].name;
+          htmlTypes += `<option value="${name}" ${
+            data.type.name == name ? "selected" : ""
+          }>${name}</option>`;
+        }
+
+        document.getElementById(
+          "create-type-section"
+        ).innerHTML = `<label>Type:</label><select id="create-type" name="type" ><option value=""></option>${htmlTypes}</select>`;
+        document.getElementById(
+          "create-name-section"
+        ).innerHTML = `<label>Name</label><input id="create-name" name="name" value="${data.name}"/>`;
+        document.getElementById(
+          "modal-btn"
+        ).innerHTML = `<button onclick="createPokman(${data.id})" class="save">save</button>`;
+      }
     </script>
   </body>
 </html>
