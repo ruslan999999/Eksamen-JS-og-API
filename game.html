@@ -114,6 +114,51 @@ function waterCannon() {
     playerMove = 1;
 }
 }
+
+function setPointForOpponent(selected_opponent,opHP){
+
+if(selected_opponent=="venusaur" ){
+  venusaurHP = venusaurHP + opHP;
+
+  if(venusaurHP < 0){ venusaurHP = 0}
+  document.getElementById('venusaurHP').innerHTML = venusaurHP;
+  if(venusaurHP == 0){
+    document.getElementById('message').innerHTML = " Venusaur fainted! "
+    document.getElementById('venusaur-name').innerHTML = " Venusaur fainted! " 
+    document.getElementById('opponent1').style.display = "none" ;
+    document.getElementById('select-section').style.display = "none" ;
+    (document.getElementById("selected-openent")).value = "charmeleon"
+    var audio = new Audio("./win.wav");
+    audio.play();
+  }
+
+}else if(selected_opponent=="charmeleon"){
+
+  charmeleonHP = charmeleonHP + opHP;
+  if(charmeleonHP < 0){ charmeleonHP = 0}
+  document.getElementById('charmeleonHP').innerHTML = charmeleonHP;
+  if(charmeleonHP  == 0){
+    document.getElementById('message').innerHTML = " charmeleon fainted! " ;
+    document.getElementById('charmeleon-name').innerHTML = " charmeleon fainted! " ;
+    document.getElementById('opponent2').style.display = "none" ;
+    document.getElementById('select-section').style.display = "none" ;
+    (document.getElementById("selected-openent")).value = "venusaur"
+    var audio = new Audio("./win.wav");
+    audio.play();
+  }
+
+}else{
+
+  return;
+}
+
+if(venusaurHP==0 &&  charmeleonHP==0){
+  gameWin();
+}else{
+  document.getElementById("player-action").style.display = "none";
+  document.getElementById("continue").style.display = "block";
+}
+}
       </script>
 </body>
 </html>
