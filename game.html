@@ -83,6 +83,37 @@ var charmeleonAttack = [flameThrower, firFang, flameBurst,ember];
 var venusaurAttack = [solarBeam,petalBlizzard,vineWhip,  razoLeaf];
 var playerMove = 0;
 
+function waterCannon() {
+  let selected_opponent = (document.getElementById("selected-openent")).value;
+  if(selected_opponent!=="venusaur" && selected_opponent!=="charmeleon" ) {
+    alert("select one opponent");
+    return ;
+  }
+  let opHP = 0 ;
+  if(playerMove == 0 && userHP != 0) {
+    var miss = Math.floor((Math.random() * 10) + 1);
+    if(miss == 1) {
+      document.getElementById('message').innerHTML = " Blastoise's attack missed! ";
+      document.getElementById("player-action").style.display = "none";
+      document.getElementById("continue").style.display = "block";
+    }else {
+      document.getElementById('message').innerHTML = " Blastoise used water cannon "+"to attack to"+selected_opponent;
+      var critical = Math.floor((Math.random() * 10) + 1);
+      if(critical == 4){
+        for(var x = 0; x < 2; x++){
+          opHP  -= 30;
+        }
+      }
+      else{
+        opHP =  - 30;
+      }
+     setPointForOpponent(selected_opponent,opHP);
+  
+    }
+    
+    playerMove = 1;
+}
+}
       </script>
 </body>
 </html>
