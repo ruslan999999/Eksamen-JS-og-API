@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battle</title>
+</head>
+<body>
+    <div class="game">
+        <div id="opponent1" class="opponent opponent1">
+          <div class="stats">
+            <div class="top">
+            
+              <div id = "venusaurHP" class="hp-count">100</div>
+            </div>
+            <span  id="venusaur-name" class="name">
+              venusaur
+            </span>
+           
+          </div>
+          <img class="pokemon" src="./images/venusaur.gif" alt ="A sprite of charizard" />
+        </div>
+      
+        <div id="opponent2"  class="opponent opponent2 ">
+          <div class="stats">
+            <div class="top">
+            
+              <div id = "charmeleonHP" class="hp-count">100</div>
+            </div>
+            <span id="charmeleon-name" class="name">
+              charmeleon
+            </span>
+         
+          </div>
+          <img class="pokemon" src="./images/charmeleongif.gif" alt ="A sprite of charmeleon" />
+        </div>
+      
+        <div id="player" class="player">
+          <div class="stats">
+            <div class="top">
+            
+              <div id = "myHP" class="hp-count">100</div>
+            </div>
+            <span class="name">
+              Blastoise
+            </span>
+          
+          </div>
+          <img class="pokemon" src="./images/blastoise.gif" alt="A gif from blastoises back sprite" />
+        </div>
+      
+      </div>
+      <div class="box">
+        <div  class="message">
+         <span id = "message" > What should Blastoise do?</span>
+         <span id="gameOver">gameOver</span>
+         <button id="tryagain" class="tryagain" onclick = "startGame()">Try again</button>
+        </div>
+        <div id="player-action" class="player-action">
+      <div id="select-section">    <div>Select opponent</div>
+      <select id="selected-openent">
+        <option value=""></option>
+        <option value="venusaur">venusaur</option>
+        <option value="charmeleon">charmeleon</option>
+      </select></div>
+          <div>select Attack</div>
+          <div class="actions">
+            <button onclick = "waterCannon()">Water Cannon</button>
+            <button onclick = "waterPulse()">Water Pulse</button>
+            <button onclick = "surf()">Surf</button>
+            <button onclick = "tackle()">Tackle</button>
+          </div>
+        </div>
+        <div id="continue" class = "continue">
+          <button onclick = "compPokemon()"> Opponent Attack</button>
+        </div>
+      </div>
+</body>
+</html>
