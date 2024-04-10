@@ -258,28 +258,58 @@ function tackle() {
 }
 
 function flameThrower() {
-  var miss = Math.floor((Math.random() * 10) + 1); // miss rate
+  var miss = Math.floor((Math.random() * 10) + 1);
   if(miss == 1 ) {
-  document.getElementById('message').innerHTML = " charmeleon's attack missed! " // attack missed
+  document.getElementById('message').innerHTML = " charmeleon's attack missed! " 
   document.getElementById("player-action").style.display = "flex";
   document.getElementById("continue").style.display = "none";
   }
   else {
-  document.getElementById('message').innerHTML = " charmeleon used flame thrower " // attack
-    var critical = Math.floor((Math.random() * 10) + 1); // critical
+  document.getElementById('message').innerHTML = " charmeleon used flame thrower " 
+    var critical = Math.floor((Math.random() * 10) + 1); 
       if(critical == 4){
-        for(var x = 0; x < 2; x++){ // yes critical
+        for(var x = 0; x < 2; x++){ 
           userHP = userHP - 30;
         }
       }
       else{
-        userHP = userHP - 30; // no critical
+        userHP = userHP - 30;
       }
-  if(userHP < 0) { userHP = 0} // faint
-  document.getElementById('myHP').innerHTML = userHP; // update hp
-    if(userHP == 0) { // fainted
-      document.getElementById('message').innerHTML = " Blastoise fainted! " // fainted;
+  if(userHP < 0) { userHP = 0}
+  document.getElementById('myHP').innerHTML = userHP;
+    if(userHP == 0) {
+      document.getElementById('message').innerHTML = " Blastoise fainted! "
      gameOver();
+    }else{
+      document.getElementById("player-action").style.display = "flex";
+      document.getElementById("continue").style.display = "none";
+    }
+  }
+}
+
+function firFang() {
+  var miss = Math.floor((Math.random() * 10) + 1);
+  if(miss == 1 ) {
+    document.getElementById('message').innerHTML = " charmeleon's attack missed! "
+    document.getElementById("player-action").style.display = "flex";
+    document.getElementById("continue").style.display = "none";
+  }
+  else {
+  document.getElementById('message').innerHTML = " charmeleon used fire fang "
+  var critical = Math.floor((Math.random() * 10) + 1);
+    if(critical == 4){
+      for(var x = 0; x < 2; x++){
+        userHP = userHP - 20;
+      }
+    }
+    else{
+      userHP = userHP - 20;
+    }
+  if(userHP < 0) { userHP = 0}
+  document.getElementById('myHP').innerHTML = userHP;
+    if(userHP == 0){
+      document.getElementById('message').innerHTML = " Blastoise fainted! ";
+      gameOver();
     }else{
       document.getElementById("player-action").style.display = "flex";
       document.getElementById("continue").style.display = "none";
