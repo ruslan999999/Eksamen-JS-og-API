@@ -256,6 +256,36 @@ function tackle() {
   playerMove = 1;
 }
 }
+
+function flameThrower() {
+  var miss = Math.floor((Math.random() * 10) + 1); // miss rate
+  if(miss == 1 ) {
+  document.getElementById('message').innerHTML = " charmeleon's attack missed! " // attack missed
+  document.getElementById("player-action").style.display = "flex";
+  document.getElementById("continue").style.display = "none";
+  }
+  else {
+  document.getElementById('message').innerHTML = " charmeleon used flame thrower " // attack
+    var critical = Math.floor((Math.random() * 10) + 1); // critical
+      if(critical == 4){
+        for(var x = 0; x < 2; x++){ // yes critical
+          userHP = userHP - 30;
+        }
+      }
+      else{
+        userHP = userHP - 30; // no critical
+      }
+  if(userHP < 0) { userHP = 0} // faint
+  document.getElementById('myHP').innerHTML = userHP; // update hp
+    if(userHP == 0) { // fainted
+      document.getElementById('message').innerHTML = " Blastoise fainted! " // fainted;
+     gameOver();
+    }else{
+      document.getElementById("player-action").style.display = "flex";
+      document.getElementById("continue").style.display = "none";
+    }
+  }
+}
       </script>
 </body>
 </html>
