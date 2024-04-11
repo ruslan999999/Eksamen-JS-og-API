@@ -548,7 +548,23 @@ document.getElementById("player-action").style.display = "none";
   document.getElementById("gameOver").style.display = "block";
   document.getElementById("gameOver").style.color= "red";
   document.getElementById("gameOver").innerHTML= "Game Over!";
-  document.getElementById('player').style.display = "none" ;
+  document.getElementById('player').style.display = "none";
+}
+
+  function gameWin(){
+  
+  var audio = new Audio("./win.wav");
+audio.play();
+  document.getElementById("tryagain").style.display = "block";
+  document.getElementById("gameOver").style.display = "block";
+  document.getElementById("gameOver").style.color= "lawngreen";
+  document.getElementById("gameOver").innerHTML= "congratulation ,You Won!";
+
+  document.getElementById("player-action").style.display = "none";
+  document.getElementById("continue").style.display = "none";
+
+
+}
       </script>
 </body>
 </html>
