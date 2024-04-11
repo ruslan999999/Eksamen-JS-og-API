@@ -536,6 +536,19 @@ function startGame(){
  charmeleonHP = 100;
  playerMove=0;
 }
+
+function gameOver(){
+  
+  var audio = new Audio("./gameover.wav");
+audio.play();
+document.getElementById("continue").style.display = "none";
+document.getElementById("player-action").style.display = "none";
+
+  document.getElementById("tryagain").style.display = "block";
+  document.getElementById("gameOver").style.display = "block";
+  document.getElementById("gameOver").style.color= "red";
+  document.getElementById("gameOver").innerHTML= "Game Over!";
+  document.getElementById('player').style.display = "none" ;
       </script>
 </body>
 </html>
