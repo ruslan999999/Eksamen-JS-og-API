@@ -497,6 +497,23 @@ function razoLeaf() {
     }
   }
 }
+function compPokemon() {
+
+if(playerMove == 1 && (venusaurHP != 0 || charmeleonHP!=0 )) {
+var move = Math.floor((Math.random() * 3) + 1);
+var randomOp = Math.floor((Math.random() * 2) + 1);
+
+if(randomOp==1 && venusaurHP!==0){
+  venusaurAttack[move]();
+}else{
+  charmeleonAttack[move]();
+}
+
+
+  playerMove = 0;
+}
+}
+
       </script>
 </body>
 </html>
