@@ -376,6 +376,37 @@ function ember() {
     }
   }
 }
+
+function solarBeam() {
+  var miss = Math.floor((Math.random() * 10) + 1);
+  if(miss == 1 ) {
+  document.getElementById('message').innerHTML = " venusaur's attack missed! " 
+  document.getElementById("player-action").style.display = "flex";
+  document.getElementById("continue").style.display = "none";
+  }
+  else {
+  document.getElementById('message').innerHTML = " venusaur used solar Beam "
+    var critical = Math.floor((Math.random() * 10) + 1);
+      if(critical == 4){
+        for(var x = 0; x < 2; x++){
+          userHP = userHP - 30;
+        }
+      }
+      else{
+        userHP = userHP - 30;
+      }
+  if(userHP < 0) { userHP = 0}
+  document.getElementById('myHP').innerHTML = userHP;
+    if(userHP == 0) {
+      document.getElementById('message').innerHTML = " Blastoise fainted! "
+      
+     gameOver();
+    }else{
+      document.getElementById("player-action").style.display = "flex";
+      document.getElementById("continue").style.display = "none";
+    }
+  }
+}
       </script>
 </body>
 </html>
