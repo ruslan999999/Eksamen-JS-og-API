@@ -1,570 +1,818 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Battle</title>
-</head>
-<body>
+  </head>
+  <style>
+   body {
+  font-family: monospace;
+  font-size: 20px;
+}
+
+.game {
+  position: relative;
+  background-image: url('https://pokemonrevolution.net/forum/uploads/monthly_2021_03/DVMT-6OXcAE2rZY.jpg.afab972f972bd7fbd4253bc7aa1cf27f.jpg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  border: 3px solid black;
+  border-radius: 8px 8px 0 0;
+  height: 480px;
+  width: 100vw;
+}
+
+.opponent {
+
+  height: 300px;
+}
+.opponent1{
+  position: absolute;
+  right: 0px;
+  width: 400px;
+  top:0px;
+}
+.opponent2{
+  position: absolute;
+  left: 0px;
+  width: 400px;
+  top:0px;
+}
+
+.opponent .stats {
+  position: absolute;
+  top: 96px;
+  left: 7px;
+  width: 320px;
+}
+
+.opponent1 .pokemon {
+  position: absolute;
+  bottom: 0;
+  right: 140px;
+  width: 160px;
+}
+
+.opponent2 .pokemon {
+  position: absolute;
+  bottom: 0;
+  right: 140px;
+  width: 100px;
+}
+.player {
+  position: absolute;
+  height: 192px;
+  bottom: 0px;
+  width: 400px;
+}
+
+.player .stats {
+  position: absolute;
+  top: 48px;
+  right: 40px;
+  width: 320px;
+}
+
+.player .pokemon {
+  position: absolute;
+  right: -122px;
+  bottom: -13px;
+  width: 160px;
+
+}
+
+.box {
+  padding: 8px;
+  background: #333;
+  border: 3px solid black;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  color: #fff;
+  height: 250px;
+  width: 100vw;
+  position: relative;
+}
+
+.box .message {
+  position: relative;
+  float: left;
+  font-size: 17px;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+.box .continue {
+  position: absolute;
+  margin-top: 30px;
+  float: left;
+  width:150x;
+  height: 100%;
+  top: 25px;
+  display: none;
+}
+.box .continue  button,.tryagain {
+  position: relative;
+  float: left;
+  background: #666;
+  border: 3px solid #888;
+  border-radius: 4px;
+  color: #fff;
+  font-family: monospace;
+  font-size: 20px;
+  line-height: 14px;
+  margin: 4px;
+  padding: 16px;
+  outline: none !important;
+  
+}
+.tryagain{
+  background-color: green;
+  margin: 10px 0px;
+  display: none;
+}
+#gameOver{
+  color: red;
+  display: none;
+}
+.box .continue button:hover {
+  background: #777;
+  border-color: #999;
+}
+
+.box .continue button:active {
+  background: #555;
+  border-color: #666;
+}
+
+.box .actions {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 100%;
+}
+.player-action{
+  display: flex;
+  flex-direction: column;
+}
+#selected-openent{
+  margin: 10px;
+  width: 130px;
+}
+.box .actions button {
+  position: relative;
+  float: left;
+  background: #666;
+  border: 3px solid #888;
+  border-radius: 4px;
+  color: #fff;
+  font-family: monospace;
+  font-size: 20px;
+  line-height: 14px;
+  margin: 4px;
+  padding: 16px;
+  width: calc(50% - 8px);
+  height: calc(50% - 8px);
+  outline: none !important;
+}
+
+.box .actions button:hover {
+  background: #777;
+  border-color: #999;
+}
+
+.box .actions button:active {
+  background: #555;
+  border-color: #666;
+}
+.stats {
+  background: #111;
+  border: 2px solid black;
+  border-radius: 8px;
+  color: white;
+  padding: 12px;
+}
+
+
+
+
+.stats .hp-count {
+  float: right;
+}
+
+
+.stats .name {
+  font-weight: bold;
+}
+
+.stats .level:before {
+  content: "LVL"
+}
+  
+  </style>
+  <body>
     <div class="game">
-        <div id="opponent1" class="opponent opponent1">
-          <div class="stats">
-            <div class="top">
-            
-              <div id = "venusaurHP" class="hp-count">100</div>
-            </div>
-            <span  id="venusaur-name" class="name">
-              venusaur
-            </span>
-           
+      <div id="opponent1" class="opponent opponent1">
+        <div class="stats">
+          <div class="top">
+            <div id="venusaurHP" class="hp-count">100</div>
           </div>
-          <img class="pokemon" src="./images/venusaur.gif" alt ="A sprite of charizard" />
+          <span id="venusaur-name" class="name"> venusaur </span>
         </div>
-      
-        <div id="opponent2"  class="opponent opponent2 ">
-          <div class="stats">
-            <div class="top">
-            
-              <div id = "charmeleonHP" class="hp-count">100</div>
-            </div>
-            <span id="charmeleon-name" class="name">
-              charmeleon
-            </span>
-         
-          </div>
-          <img class="pokemon" src="./images/charmeleongif.gif" alt ="A sprite of charmeleon" />
-        </div>
-      
-        <div id="player" class="player">
-          <div class="stats">
-            <div class="top">
-            
-              <div id = "myHP" class="hp-count">100</div>
-            </div>
-            <span class="name">
-              Blastoise
-            </span>
-          
-          </div>
-          <img class="pokemon" src="./images/blastoise.gif" alt="A gif from blastoises back sprite" />
-        </div>
-      
+        <img
+          class="pokemon"
+          src="./images/venusaur.gif"
+          alt="A sprite of charizard"
+        />
       </div>
-      <div class="box">
-        <div  class="message">
-         <span id = "message" > What should Blastoise do?</span>
-         <span id="gameOver">gameOver</span>
-         <button id="tryagain" class="tryagain" onclick = "startGame()">Try again</button>
-        </div>
-        <div id="player-action" class="player-action">
-      <div id="select-section">    <div>Select opponent</div>
-      <select id="selected-openent">
-        <option value=""></option>
-        <option value="venusaur">venusaur</option>
-        <option value="charmeleon">charmeleon</option>
-      </select></div>
-          <div>select Attack</div>
-          <div class="actions">
-            <button onclick = "waterCannon()">Water Cannon</button>
-            <button onclick = "waterPulse()">Water Pulse</button>
-            <button onclick = "surf()">Surf</button>
-            <button onclick = "tackle()">Tackle</button>
+
+      <div id="opponent2" class="opponent opponent2">
+        <div class="stats">
+          <div class="top">
+            <div id="charmeleonHP" class="hp-count">100</div>
           </div>
+          <span id="charmeleon-name" class="name"> charmeleon </span>
         </div>
-        <div id="continue" class = "continue">
-          <button onclick = "compPokemon()"> Opponent Attack</button>
+        <img
+          class="pokemon"
+          src="./images/charmeleongif.gif"
+          alt="A sprite of charmeleon"
+        />
+      </div>
+
+      <div id="player" class="player">
+        <div class="stats">
+          <div class="top">
+            <div id="myHP" class="hp-count">100</div>
+          </div>
+          <span class="name"> Blastoise </span>
+        </div>
+        <img
+          class="pokemon"
+          src="./images/blastoise.gif"
+          alt="A gif from blastoises back sprite"
+        />
+      </div>
+    </div>
+    <div class="box">
+      <div class="message">
+        <span id="message"> What should Blastoise do?</span>
+        <span id="gameOver">gameOver</span>
+        <button id="tryagain" class="tryagain" onclick="startGame()">
+          Try again
+        </button>
+      </div>
+      <div id="player-action" class="player-action">
+        <div id="select-section">
+          <div>Select opponent</div>
+          <select id="selected-openent">
+            <option value=""></option>
+            <option value="venusaur">venusaur</option>
+            <option value="charmeleon">charmeleon</option>
+          </select>
+        </div>
+        <div>select Attack</div>
+        <div class="actions">
+          <button onclick="waterCannon()">Water Cannon</button>
+          <button onclick="waterPulse()">Water Pulse</button>
+          <button onclick="surf()">Surf</button>
+          <button onclick="tackle()">Tackle</button>
         </div>
       </div>
-      <script>
-var userHP = 100;
-var venusaurHP = 100;
-var charmeleonHP = 100;
-var charmeleonAttack = [flameThrower, firFang, flameBurst,ember];
-var venusaurAttack = [solarBeam,petalBlizzard,vineWhip,  razoLeaf];
-var playerMove = 0;
+      <div id="continue" class="continue">
+        <button onclick="compPokemon()">Opponent Attack</button>
+      </div>
+    </div>
+    <script>
+      var userHP = 100;
+      var venusaurHP = 100;
+      var charmeleonHP = 100;
+      var charmeleonAttack = [flameThrower, firFang, flameBurst, ember];
+      var venusaurAttack = [solarBeam, petalBlizzard, vineWhip, razoLeaf];
+      var playerMove = 0;
 
-function waterCannon() {
-  let selected_opponent = (document.getElementById("selected-openent")).value;
-  if(selected_opponent!=="venusaur" && selected_opponent!=="charmeleon" ) {
-    alert("select one opponent");
-    return ;
-  }
-  let opHP = 0 ;
-  if(playerMove == 0 && userHP != 0) {
-    var miss = Math.floor((Math.random() * 10) + 1);
-    if(miss == 1) {
-      document.getElementById('message').innerHTML = " Blastoise's attack missed! ";
-      document.getElementById("player-action").style.display = "none";
-      document.getElementById("continue").style.display = "block";
-    }else {
-      document.getElementById('message').innerHTML = " Blastoise used water cannon "+"to attack to"+selected_opponent;
-      var critical = Math.floor((Math.random() * 10) + 1);
-      if(critical == 4){
-        for(var x = 0; x < 2; x++){
-          opHP  -= 30;
+      function waterCannon() {
+        let selected_opponent =
+          document.getElementById("selected-openent").value;
+        if (
+          selected_opponent !== "venusaur" &&
+          selected_opponent !== "charmeleon"
+        ) {
+          alert("select one opponent");
+          return;
+        }
+        let opHP = 0;
+        if (playerMove == 0 && userHP != 0) {
+          var miss = Math.floor(Math.random() * 10 + 1);
+          if (miss == 1) {
+            document.getElementById("message").innerHTML =
+              " Blastoise's attack missed! ";
+            document.getElementById("player-action").style.display = "none";
+            document.getElementById("continue").style.display = "block";
+          } else {
+            document.getElementById("message").innerHTML =
+              " Blastoise used water cannon " +
+              "to attack to" +
+              selected_opponent;
+            var critical = Math.floor(Math.random() * 10 + 1);
+            if (critical == 4) {
+              for (var x = 0; x < 2; x++) {
+                opHP -= 30;
+              }
+            } else {
+              opHP = -30;
+            }
+            setPointForOpponent(selected_opponent, opHP);
+          }
+
+          playerMove = 1;
         }
       }
-      else{
-        opHP =  - 30;
-      }
-     setPointForOpponent(selected_opponent,opHP);
-  
-    }
-    
-    playerMove = 1;
-}
-}
 
-function setPointForOpponent(selected_opponent,opHP){
+      function setPointForOpponent(selected_opponent, opHP) {
+        if (selected_opponent == "venusaur") {
+          venusaurHP = venusaurHP + opHP;
 
-if(selected_opponent=="venusaur" ){
-  venusaurHP = venusaurHP + opHP;
+          if (venusaurHP < 0) {
+            venusaurHP = 0;
+          }
+          document.getElementById("venusaurHP").innerHTML = venusaurHP;
+          if (venusaurHP == 0) {
+            document.getElementById("message").innerHTML =
+              " Venusaur fainted! ";
+            document.getElementById("venusaur-name").innerHTML =
+              " Venusaur fainted! ";
+            document.getElementById("opponent1").style.display = "none";
+            document.getElementById("select-section").style.display = "none";
+            document.getElementById("selected-openent").value = "charmeleon";
+            var audio = new Audio("./win.wav");
+            audio.play();
+          }
+        } else if (selected_opponent == "charmeleon") {
+          charmeleonHP = charmeleonHP + opHP;
+          if (charmeleonHP < 0) {
+            charmeleonHP = 0;
+          }
+          document.getElementById("charmeleonHP").innerHTML = charmeleonHP;
+          if (charmeleonHP == 0) {
+            document.getElementById("message").innerHTML =
+              " charmeleon fainted! ";
+            document.getElementById("charmeleon-name").innerHTML =
+              " charmeleon fainted! ";
+            document.getElementById("opponent2").style.display = "none";
+            document.getElementById("select-section").style.display = "none";
+            document.getElementById("selected-openent").value = "venusaur";
+            var audio = new Audio("./win.wav");
+            audio.play();
+          }
+        } else {
+          return;
+        }
 
-  if(venusaurHP < 0){ venusaurHP = 0}
-  document.getElementById('venusaurHP').innerHTML = venusaurHP;
-  if(venusaurHP == 0){
-    document.getElementById('message').innerHTML = " Venusaur fainted! "
-    document.getElementById('venusaur-name').innerHTML = " Venusaur fainted! " 
-    document.getElementById('opponent1').style.display = "none" ;
-    document.getElementById('select-section').style.display = "none" ;
-    (document.getElementById("selected-openent")).value = "charmeleon"
-    var audio = new Audio("./win.wav");
-    audio.play();
-  }
-
-}else if(selected_opponent=="charmeleon"){
-
-  charmeleonHP = charmeleonHP + opHP;
-  if(charmeleonHP < 0){ charmeleonHP = 0}
-  document.getElementById('charmeleonHP').innerHTML = charmeleonHP;
-  if(charmeleonHP  == 0){
-    document.getElementById('message').innerHTML = " charmeleon fainted! " ;
-    document.getElementById('charmeleon-name').innerHTML = " charmeleon fainted! " ;
-    document.getElementById('opponent2').style.display = "none" ;
-    document.getElementById('select-section').style.display = "none" ;
-    (document.getElementById("selected-openent")).value = "venusaur"
-    var audio = new Audio("./win.wav");
-    audio.play();
-  }
-
-}else{
-
-  return;
-}
-
-if(venusaurHP==0 &&  charmeleonHP==0){
-  gameWin();
-}else{
-  document.getElementById("player-action").style.display = "none";
-  document.getElementById("continue").style.display = "block";
-}
-}
-
-function waterPulse() {
-  let selected_opponent = (document.getElementById("selected-openent")).value;
-  if(selected_opponent!=="venusaur" && selected_opponent!=="charmeleon" ) {
-    alert("select one opponent");
-    return ;
-  }
-  let opHP = 0 ;
-  if(playerMove == 0 && userHP != 0) {
-  var miss = Math.floor((Math.random() * 10) + 1);
-  if(miss == 1 ) {
-    document.getElementById('message').innerHTML = " Blastoise's attack missed! "
-    document.getElementById("player-action").style.display = "none";
-    document.getElementById("continue").style.display = "block";
-  }
-  else {
-    document.getElementById('message').innerHTML = " Blastoise used water pulse "+"to attack to"+selected_opponent;
-    var critical = Math.floor((Math.random() * 10) + 1);
-      if(critical == 4){
-        for(var x = 0; x < 2; x++){
-          opHP = opHP - 20;
+        if (venusaurHP == 0 && charmeleonHP == 0) {
+          gameWin();
+        } else {
+          document.getElementById("player-action").style.display = "none";
+          document.getElementById("continue").style.display = "block";
         }
       }
-      else{
-        opHP = opHP - 20;
-      }
-      setPointForOpponent(selected_opponent,opHP);
-  }
- 
-  playerMove = 1;
-}
-}
 
-function surf() {
-  let selected_opponent = (document.getElementById("selected-openent")).value;
-  if(selected_opponent!=="venusaur" && selected_opponent!=="charmeleon" ) {
-    alert("select one opponent");
-    return ;
-  }
-  let opHP = 0 ;
-  if(playerMove == 0 && userHP != 0) {
-  var miss = Math.floor((Math.random() * 10) + 1);
-  if(miss == 1 ) {
-    document.getElementById('message').innerHTML = " Blastoise's attack missed! "
-    document.getElementById("player-action").style.display = "none";
-    document.getElementById("continue").style.display = "block";
-  }
-  else {
-    document.getElementById('message').innerHTML = " Blastoise used surf "+"to attack to"+selected_opponent;
-    var critical = Math.floor((Math.random() * 10) + 1);
-      if(critical == 4){
-        for(var x = 0; x < 2; x++){
-          opHP = opHP - 10;
+      function waterPulse() {
+        let selected_opponent =
+          document.getElementById("selected-openent").value;
+        if (
+          selected_opponent !== "venusaur" &&
+          selected_opponent !== "charmeleon"
+        ) {
+          alert("select one opponent");
+          return;
+        }
+        let opHP = 0;
+        if (playerMove == 0 && userHP != 0) {
+          var miss = Math.floor(Math.random() * 10 + 1);
+          if (miss == 1) {
+            document.getElementById("message").innerHTML =
+              " Blastoise's attack missed! ";
+            document.getElementById("player-action").style.display = "none";
+            document.getElementById("continue").style.display = "block";
+          } else {
+            document.getElementById("message").innerHTML =
+              " Blastoise used water pulse " +
+              "to attack to" +
+              selected_opponent;
+            var critical = Math.floor(Math.random() * 10 + 1);
+            if (critical == 4) {
+              for (var x = 0; x < 2; x++) {
+                opHP = opHP - 20;
+              }
+            } else {
+              opHP = opHP - 20;
+            }
+            setPointForOpponent(selected_opponent, opHP);
+          }
+
+          playerMove = 1;
         }
       }
-      else{
-        opHP = opHP - 10;
-      }
-      setPointForOpponent(selected_opponent,opHP);
-  }
-  
-  playerMove = 1;
-}
-}
 
-function tackle() {
-  let selected_opponent = (document.getElementById("selected-openent")).value;
-  if(selected_opponent!=="venusaur" && selected_opponent!=="charmeleon" ) {
-    alert("select one opponent");
-    return ;
-  }
-  let opHP = 0 ;
-  if(playerMove == 0 && userHP != 0) {
-  
-  var miss = Math.floor((Math.random() * 10) + 1);
-  if(miss == 1 ) {
-    document.getElementById('message').innerHTML = " Blastoise's attack missed! "
-    document.getElementById("player-action").style.display = "none";
-    document.getElementById("continue").style.display = "block";
-  }
-  else {
-    document.getElementById('message').innerHTML = " Blastoise used tackle "+"to attack to"+selected_opponent;
-    var critical = Math.floor((Math.random() * 10) + 1);
-      if(critical == 4){
-        for(var x = 0; x < 2; x++){
-          opHP = opHP - 5;
+      function surf() {
+        let selected_opponent =
+          document.getElementById("selected-openent").value;
+        if (
+          selected_opponent !== "venusaur" &&
+          selected_opponent !== "charmeleon"
+        ) {
+          alert("select one opponent");
+          return;
+        }
+        let opHP = 0;
+        if (playerMove == 0 && userHP != 0) {
+          var miss = Math.floor(Math.random() * 10 + 1);
+          if (miss == 1) {
+            document.getElementById("message").innerHTML =
+              " Blastoise's attack missed! ";
+            document.getElementById("player-action").style.display = "none";
+            document.getElementById("continue").style.display = "block";
+          } else {
+            document.getElementById("message").innerHTML =
+              " Blastoise used surf " + "to attack to" + selected_opponent;
+            var critical = Math.floor(Math.random() * 10 + 1);
+            if (critical == 4) {
+              for (var x = 0; x < 2; x++) {
+                opHP = opHP - 10;
+              }
+            } else {
+              opHP = opHP - 10;
+            }
+            setPointForOpponent(selected_opponent, opHP);
+          }
+
+          playerMove = 1;
         }
       }
-      else{
-        opHP = opHP - 5;
-      }
-      setPointForOpponent(selected_opponent,opHP);
-  }
-  
-  playerMove = 1;
-}
-}
 
-function flameThrower() {
-  var miss = Math.floor((Math.random() * 10) + 1);
-  if(miss == 1 ) {
-  document.getElementById('message').innerHTML = " charmeleon's attack missed! " 
-  document.getElementById("player-action").style.display = "flex";
-  document.getElementById("continue").style.display = "none";
-  }
-  else {
-  document.getElementById('message').innerHTML = " charmeleon used flame thrower " 
-    var critical = Math.floor((Math.random() * 10) + 1); 
-      if(critical == 4){
-        for(var x = 0; x < 2; x++){ 
-          userHP = userHP - 30;
+      function tackle() {
+        let selected_opponent =
+          document.getElementById("selected-openent").value;
+        if (
+          selected_opponent !== "venusaur" &&
+          selected_opponent !== "charmeleon"
+        ) {
+          alert("select one opponent");
+          return;
+        }
+        let opHP = 0;
+        if (playerMove == 0 && userHP != 0) {
+          var miss = Math.floor(Math.random() * 10 + 1);
+          if (miss == 1) {
+            document.getElementById("message").innerHTML =
+              " Blastoise's attack missed! ";
+            document.getElementById("player-action").style.display = "none";
+            document.getElementById("continue").style.display = "block";
+          } else {
+            document.getElementById("message").innerHTML =
+              " Blastoise used tackle " + "to attack to" + selected_opponent;
+            var critical = Math.floor(Math.random() * 10 + 1);
+            if (critical == 4) {
+              for (var x = 0; x < 2; x++) {
+                opHP = opHP - 5;
+              }
+            } else {
+              opHP = opHP - 5;
+            }
+            setPointForOpponent(selected_opponent, opHP);
+          }
+
+          playerMove = 1;
         }
       }
-      else{
-        userHP = userHP - 30;
-      }
-  if(userHP < 0) { userHP = 0}
-  document.getElementById('myHP').innerHTML = userHP;
-    if(userHP == 0) {
-      document.getElementById('message').innerHTML = " Blastoise fainted! "
-     gameOver();
-    }else{
-      document.getElementById("player-action").style.display = "flex";
-      document.getElementById("continue").style.display = "none";
-    }
-  }
-}
 
-function firFang() {
-  var miss = Math.floor((Math.random() * 10) + 1);
-  if(miss == 1 ) {
-    document.getElementById('message').innerHTML = " charmeleon's attack missed! "
-    document.getElementById("player-action").style.display = "flex";
-    document.getElementById("continue").style.display = "none";
-  }
-  else {
-  document.getElementById('message').innerHTML = " charmeleon used fire fang "
-  var critical = Math.floor((Math.random() * 10) + 1);
-    if(critical == 4){
-      for(var x = 0; x < 2; x++){
-        userHP = userHP - 20;
-      }
-    }
-    else{
-      userHP = userHP - 20;
-    }
-  if(userHP < 0) { userHP = 0}
-  document.getElementById('myHP').innerHTML = userHP;
-    if(userHP == 0){
-      document.getElementById('message').innerHTML = " Blastoise fainted! ";
-      gameOver();
-    }else{
-      document.getElementById("player-action").style.display = "flex";
-      document.getElementById("continue").style.display = "none";
-    }
-  }
-}
-
-function flameBurst() {
-  var miss = Math.floor((Math.random() * 10) + 1);
-  if(miss == 1 ) {
-    document.getElementById('message').innerHTML = " charmeleon's attack missed! "
-    document.getElementById("player-action").style.display = "flex";
-    document.getElementById("continue").style.display = "none";
-  }
-  else {
-  document.getElementById('message').innerHTML = " charmeleon used flame Burst "
-  var critical = Math.floor((Math.random() * 10) + 1);
-    if(critical == 4){
-      for(var x = 0; x < 2; x++){
-        userHP = userHP - 10;
-      }
-    }
-    else{
-      userHP = userHP - 10;
-    }
-  if(userHP < 0) { userHP = 0}
-  document.getElementById('myHP').innerHTML = userHP;
-    if(userHP == 0){
-      document.getElementById('message').innerHTML = " Blastoise fainted! ";
-      gameOver();
-    }else{
-      document.getElementById("player-action").style.display = "flex";
-      document.getElementById("continue").style.display = "none";
-    }
-  }
-}
-
-function ember() {
-  var miss = Math.floor((Math.random() * 10) + 1);
-  if(miss == 1 ) {
-    document.getElementById('message').innerHTML = " charmeleon's attack missed! "
-    document.getElementById("player-action").style.display = "flex";
-    document.getElementById("continue").style.display = "none";
-  }
-  else {
-  document.getElementById('message').innerHTML = " charmeleon used ember "
-  var critical = Math.floor((Math.random() * 10) + 1);
-    if(critical == 4){
-      for(var x = 0; x < 2; x++){
-        userHP = userHP - 5;
-      }
-    }
-    else{
-      userHP = userHP - 5;
-    }
-  if(userHP < 0) { userHP = 0}
-  document.getElementById('myHP').innerHTML = userHP;
-    if(userHP == 0){
-      document.getElementById('message').innerHTML = " Blastoise fainted! ";
-      gameOver();
-    }else{
-      document.getElementById("player-action").style.display = "flex";
-      document.getElementById("continue").style.display = "none";
-    }
-  }
-}
-
-function solarBeam() {
-  var miss = Math.floor((Math.random() * 10) + 1);
-  if(miss == 1 ) {
-  document.getElementById('message').innerHTML = " venusaur's attack missed! " 
-  document.getElementById("player-action").style.display = "flex";
-  document.getElementById("continue").style.display = "none";
-  }
-  else {
-  document.getElementById('message').innerHTML = " venusaur used solar Beam "
-    var critical = Math.floor((Math.random() * 10) + 1);
-      if(critical == 4){
-        for(var x = 0; x < 2; x++){
-          userHP = userHP - 30;
+      function flameThrower() {
+        var miss = Math.floor(Math.random() * 10 + 1);
+        if (miss == 1) {
+          document.getElementById("message").innerHTML =
+            " charmeleon's attack missed! ";
+          document.getElementById("player-action").style.display = "flex";
+          document.getElementById("continue").style.display = "none";
+        } else {
+          document.getElementById("message").innerHTML =
+            " charmeleon used flame thrower ";
+          var critical = Math.floor(Math.random() * 10 + 1);
+          if (critical == 4) {
+            for (var x = 0; x < 2; x++) {
+              userHP = userHP - 30;
+            }
+          } else {
+            userHP = userHP - 30;
+          }
+          if (userHP < 0) {
+            userHP = 0;
+          }
+          document.getElementById("myHP").innerHTML = userHP;
+          if (userHP == 0) {
+            document.getElementById("message").innerHTML =
+              " Blastoise fainted! ";
+            gameOver();
+          } else {
+            document.getElementById("player-action").style.display = "flex";
+            document.getElementById("continue").style.display = "none";
+          }
         }
       }
-      else{
-        userHP = userHP - 30;
+
+      function firFang() {
+        var miss = Math.floor(Math.random() * 10 + 1);
+        if (miss == 1) {
+          document.getElementById("message").innerHTML =
+            " charmeleon's attack missed! ";
+          document.getElementById("player-action").style.display = "flex";
+          document.getElementById("continue").style.display = "none";
+        } else {
+          document.getElementById("message").innerHTML =
+            " charmeleon used fire fang ";
+          var critical = Math.floor(Math.random() * 10 + 1);
+          if (critical == 4) {
+            for (var x = 0; x < 2; x++) {
+              userHP = userHP - 20;
+            }
+          } else {
+            userHP = userHP - 20;
+          }
+          if (userHP < 0) {
+            userHP = 0;
+          }
+          document.getElementById("myHP").innerHTML = userHP;
+          if (userHP == 0) {
+            document.getElementById("message").innerHTML =
+              " Blastoise fainted! ";
+            gameOver();
+          } else {
+            document.getElementById("player-action").style.display = "flex";
+            document.getElementById("continue").style.display = "none";
+          }
+        }
       }
-  if(userHP < 0) { userHP = 0}
-  document.getElementById('myHP').innerHTML = userHP;
-    if(userHP == 0) {
-      document.getElementById('message').innerHTML = " Blastoise fainted! "
-      
-     gameOver();
-    }else{
-      document.getElementById("player-action").style.display = "flex";
-      document.getElementById("continue").style.display = "none";
-    }
-  }
-}
-function petalBlizzard() {
-  var miss = Math.floor((Math.random() * 10) + 1);
-  if(miss == 1 ) {
-    document.getElementById('message').innerHTML = " venusaur's attack missed! "
-    document.getElementById("player-action").style.display = "flex";
-    document.getElementById("continue").style.display = "none";
 
-  }
-  else {
-  document.getElementById('message').innerHTML = " venusaur used petal Blizzard "
-  var critical = Math.floor((Math.random() * 10) + 1);
-    if(critical == 4){
-      for(var x = 0; x < 2; x++){
-        userHP = userHP - 20;
+      function flameBurst() {
+        var miss = Math.floor(Math.random() * 10 + 1);
+        if (miss == 1) {
+          document.getElementById("message").innerHTML =
+            " charmeleon's attack missed! ";
+          document.getElementById("player-action").style.display = "flex";
+          document.getElementById("continue").style.display = "none";
+        } else {
+          document.getElementById("message").innerHTML =
+            " charmeleon used flame Burst ";
+          var critical = Math.floor(Math.random() * 10 + 1);
+          if (critical == 4) {
+            for (var x = 0; x < 2; x++) {
+              userHP = userHP - 10;
+            }
+          } else {
+            userHP = userHP - 10;
+          }
+          if (userHP < 0) {
+            userHP = 0;
+          }
+          document.getElementById("myHP").innerHTML = userHP;
+          if (userHP == 0) {
+            document.getElementById("message").innerHTML =
+              " Blastoise fainted! ";
+            gameOver();
+          } else {
+            document.getElementById("player-action").style.display = "flex";
+            document.getElementById("continue").style.display = "none";
+          }
+        }
       }
-    }
-    else{
-      userHP = userHP - 20;
-    }
-  if(userHP < 0) { userHP = 0}
-  document.getElementById('myHP').innerHTML = userHP;
-    if(userHP == 0){
-      document.getElementById('message').innerHTML = " Blastoise fainted! ";
-      gameOver();
-    }else{
-      document.getElementById("player-action").style.display = "flex";
-      document.getElementById("continue").style.display = "none";
-    }
-  }
-}
 
-function vineWhip() {
-  var miss = Math.floor((Math.random() * 10) + 1);
-  if(miss == 1 ) {
-    document.getElementById('message').innerHTML = " venusaur's attack missed! "
-    document.getElementById("player-action").style.display = "flex";
-    document.getElementById("continue").style.display = "none";
-  }
-  else {
-  document.getElementById('message').innerHTML = " venusaur used vine Whip "
-  var critical = Math.floor((Math.random() * 10) + 1);
-    if(critical == 4){
-      for(var x = 0; x < 2; x++){
-        userHP = userHP - 10;
+      function ember() {
+        var miss = Math.floor(Math.random() * 10 + 1);
+        if (miss == 1) {
+          document.getElementById("message").innerHTML =
+            " charmeleon's attack missed! ";
+          document.getElementById("player-action").style.display = "flex";
+          document.getElementById("continue").style.display = "none";
+        } else {
+          document.getElementById("message").innerHTML =
+            " charmeleon used ember ";
+          var critical = Math.floor(Math.random() * 10 + 1);
+          if (critical == 4) {
+            for (var x = 0; x < 2; x++) {
+              userHP = userHP - 5;
+            }
+          } else {
+            userHP = userHP - 5;
+          }
+          if (userHP < 0) {
+            userHP = 0;
+          }
+          document.getElementById("myHP").innerHTML = userHP;
+          if (userHP == 0) {
+            document.getElementById("message").innerHTML =
+              " Blastoise fainted! ";
+            gameOver();
+          } else {
+            document.getElementById("player-action").style.display = "flex";
+            document.getElementById("continue").style.display = "none";
+          }
+        }
       }
-    }
-    else{
-      userHP = userHP - 10;
-    }
-  if(userHP < 0) { userHP = 0}
-  document.getElementById('myHP').innerHTML = userHP;
-    if(userHP == 0){
-      document.getElementById('message').innerHTML = " Blastoise fainted! ";
-      gameOver();
-    }else{
-      document.getElementById("player-action").style.display = "flex";
-      document.getElementById("continue").style.display = "none";
-    }
-  }
-}
 
-function razoLeaf() {
-  var miss = Math.floor((Math.random() * 10) + 1);
-  if(miss == 1 ) {
-    document.getElementById('message').innerHTML = " venusaur's attack missed! "
-    document.getElementById("player-action").style.display = "flex";
-    document.getElementById("continue").style.display = "none";
-  }
-  else {
-  document.getElementById('message').innerHTML = " venusaur used razo Leaf "
-  var critical = Math.floor((Math.random() * 10) + 1);
-    if(critical == 4){
-      for(var x = 0; x < 2; x++){
-        userHP = userHP - 5;
+      function solarBeam() {
+        var miss = Math.floor(Math.random() * 10 + 1);
+        if (miss == 1) {
+          document.getElementById("message").innerHTML =
+            " venusaur's attack missed! ";
+          document.getElementById("player-action").style.display = "flex";
+          document.getElementById("continue").style.display = "none";
+        } else {
+          document.getElementById("message").innerHTML =
+            " venusaur used solar Beam ";
+          var critical = Math.floor(Math.random() * 10 + 1);
+          if (critical == 4) {
+            for (var x = 0; x < 2; x++) {
+              userHP = userHP - 30;
+            }
+          } else {
+            userHP = userHP - 30;
+          }
+          if (userHP < 0) {
+            userHP = 0;
+          }
+          document.getElementById("myHP").innerHTML = userHP;
+          if (userHP == 0) {
+            document.getElementById("message").innerHTML =
+              " Blastoise fainted! ";
+
+            gameOver();
+          } else {
+            document.getElementById("player-action").style.display = "flex";
+            document.getElementById("continue").style.display = "none";
+          }
+        }
       }
-    }
-    else{
-      userHP = userHP - 5;
-    }
-  if(userHP < 0) { userHP = 0}
-  document.getElementById('myHP').innerHTML = userHP;
-    if(userHP == 0){
-      document.getElementById('message').innerHTML = " Blastoise fainted! ";
-      gameOver();
-    }else{
-      document.getElementById("player-action").style.display = "flex";
-      document.getElementById("continue").style.display = "none";
-    }
-  }
-}
-function compPokemon() {
+      function petalBlizzard() {
+        var miss = Math.floor(Math.random() * 10 + 1);
+        if (miss == 1) {
+          document.getElementById("message").innerHTML =
+            " venusaur's attack missed! ";
+          document.getElementById("player-action").style.display = "flex";
+          document.getElementById("continue").style.display = "none";
+        } else {
+          document.getElementById("message").innerHTML =
+            " venusaur used petal Blizzard ";
+          var critical = Math.floor(Math.random() * 10 + 1);
+          if (critical == 4) {
+            for (var x = 0; x < 2; x++) {
+              userHP = userHP - 20;
+            }
+          } else {
+            userHP = userHP - 20;
+          }
+          if (userHP < 0) {
+            userHP = 0;
+          }
+          document.getElementById("myHP").innerHTML = userHP;
+          if (userHP == 0) {
+            document.getElementById("message").innerHTML =
+              " Blastoise fainted! ";
+            gameOver();
+          } else {
+            document.getElementById("player-action").style.display = "flex";
+            document.getElementById("continue").style.display = "none";
+          }
+        }
+      }
 
-if(playerMove == 1 && (venusaurHP != 0 || charmeleonHP!=0 )) {
-var move = Math.floor((Math.random() * 3) + 1);
-var randomOp = Math.floor((Math.random() * 2) + 1);
+      function vineWhip() {
+        var miss = Math.floor(Math.random() * 10 + 1);
+        if (miss == 1) {
+          document.getElementById("message").innerHTML =
+            " venusaur's attack missed! ";
+          document.getElementById("player-action").style.display = "flex";
+          document.getElementById("continue").style.display = "none";
+        } else {
+          document.getElementById("message").innerHTML =
+            " venusaur used vine Whip ";
+          var critical = Math.floor(Math.random() * 10 + 1);
+          if (critical == 4) {
+            for (var x = 0; x < 2; x++) {
+              userHP = userHP - 10;
+            }
+          } else {
+            userHP = userHP - 10;
+          }
+          if (userHP < 0) {
+            userHP = 0;
+          }
+          document.getElementById("myHP").innerHTML = userHP;
+          if (userHP == 0) {
+            document.getElementById("message").innerHTML =
+              " Blastoise fainted! ";
+            gameOver();
+          } else {
+            document.getElementById("player-action").style.display = "flex";
+            document.getElementById("continue").style.display = "none";
+          }
+        }
+      }
 
-if(randomOp==1 && venusaurHP!==0){
-  venusaurAttack[move]();
-}else{
-  charmeleonAttack[move]();
-}
+      function razoLeaf() {
+        var miss = Math.floor(Math.random() * 10 + 1);
+        if (miss == 1) {
+          document.getElementById("message").innerHTML =
+            " venusaur's attack missed! ";
+          document.getElementById("player-action").style.display = "flex";
+          document.getElementById("continue").style.display = "none";
+        } else {
+          document.getElementById("message").innerHTML =
+            " venusaur used razo Leaf ";
+          var critical = Math.floor(Math.random() * 10 + 1);
+          if (critical == 4) {
+            for (var x = 0; x < 2; x++) {
+              userHP = userHP - 5;
+            }
+          } else {
+            userHP = userHP - 5;
+          }
+          if (userHP < 0) {
+            userHP = 0;
+          }
+          document.getElementById("myHP").innerHTML = userHP;
+          if (userHP == 0) {
+            document.getElementById("message").innerHTML =
+              " Blastoise fainted! ";
+            gameOver();
+          } else {
+            document.getElementById("player-action").style.display = "flex";
+            document.getElementById("continue").style.display = "none";
+          }
+        }
+      }
+      function compPokemon() {
+        if (playerMove == 1 && (venusaurHP != 0 || charmeleonHP != 0)) {
+          var move = Math.floor(Math.random() * 3 + 1);
+          var randomOp = Math.floor(Math.random() * 2 + 1);
 
+          if (randomOp == 1 && venusaurHP !== 0) {
+            venusaurAttack[move]();
+          } else {
+            charmeleonAttack[move]();
+          }
 
-  playerMove = 0;
-}
-}
+          playerMove = 0;
+        }
+      }
 
-function startGame(){
-  document.getElementById("tryagain").style.display = "none";
-  document.getElementById("gameOver").style.display = "none";
-  document.getElementById("message").style.display = "block";
-  document.getElementById("select-section").style.display = "block";
-  document.getElementById("player-action").style.display = "flex";
-  document.getElementById("continue").style.display = "none";
-  (document.getElementById("selected-openent")).value = ""
-  document.getElementById("message").innerHTML = "What should Blastoise do?";
-  document.getElementById('charmeleon-name').innerHTML ="charmeleon"
-  document.getElementById('venusaur-name').innerHTML ="venusaur"
-  document.getElementById('opponent2').style.display = "block" ;
-  document.getElementById('opponent1').style.display = "block" ;
-  document.getElementById('player').style.display = "block" ;
-  document.getElementById('myHP').innerHTML = 100;
-  document.getElementById('charmeleonHP').innerHTML = 100;
-  document.getElementById('venusaurHP').innerHTML = 100;
-  userHP = 100;
-  venusaurHP = 100;
- charmeleonHP = 100;
- playerMove=0;
-}
+      function startGame() {
+        document.getElementById("tryagain").style.display = "none";
+        document.getElementById("gameOver").style.display = "none";
+        document.getElementById("message").style.display = "block";
+        document.getElementById("select-section").style.display = "block";
+        document.getElementById("player-action").style.display = "flex";
+        document.getElementById("continue").style.display = "none";
+        document.getElementById("selected-openent").value = "";
+        document.getElementById("message").innerHTML =
+          "What should Blastoise do?";
+        document.getElementById("charmeleon-name").innerHTML = "charmeleon";
+        document.getElementById("venusaur-name").innerHTML = "venusaur";
+        document.getElementById("opponent2").style.display = "block";
+        document.getElementById("opponent1").style.display = "block";
+        document.getElementById("player").style.display = "block";
+        document.getElementById("myHP").innerHTML = 100;
+        document.getElementById("charmeleonHP").innerHTML = 100;
+        document.getElementById("venusaurHP").innerHTML = 100;
+        userHP = 100;
+        venusaurHP = 100;
+        charmeleonHP = 100;
+        playerMove = 0;
+      }
 
-function gameOver(){
-  
-  var audio = new Audio("./gameover.wav");
-audio.play();
-document.getElementById("continue").style.display = "none";
-document.getElementById("player-action").style.display = "none";
+      function gameOver() {
+        var audio = new Audio("./gameover.wav");
+        audio.play();
+        document.getElementById("continue").style.display = "none";
+        document.getElementById("player-action").style.display = "none";
 
-  document.getElementById("tryagain").style.display = "block";
-  document.getElementById("gameOver").style.display = "block";
-  document.getElementById("gameOver").style.color= "red";
-  document.getElementById("gameOver").innerHTML= "Game Over!";
-  document.getElementById('player').style.display = "none";
-}
+        document.getElementById("tryagain").style.display = "block";
+        document.getElementById("gameOver").style.display = "block";
+        document.getElementById("gameOver").style.color = "red";
+        document.getElementById("gameOver").innerHTML = "Game Over!";
+        document.getElementById("player").style.display = "none";
+      }
 
-  function gameWin(){
-  
-  var audio = new Audio("./win.wav");
-audio.play();
-  document.getElementById("tryagain").style.display = "block";
-  document.getElementById("gameOver").style.display = "block";
-  document.getElementById("gameOver").style.color= "lawngreen";
-  document.getElementById("gameOver").innerHTML= "congratulation ,You Won!";
+      function gameWin() {
+        var audio = new Audio("./win.wav");
+        audio.play();
+        document.getElementById("tryagain").style.display = "block";
+        document.getElementById("gameOver").style.display = "block";
+        document.getElementById("gameOver").style.color = "lawngreen";
+        document.getElementById("gameOver").innerHTML =
+          "congratulation ,You Won!";
 
-  document.getElementById("player-action").style.display = "none";
-  document.getElementById("continue").style.display = "none";
-
-
-}
-      </script>
-</body>
+        document.getElementById("player-action").style.display = "none";
+        document.getElementById("continue").style.display = "none";
+      }
+    </script>
+  </body>
 </html>
