@@ -514,6 +514,28 @@ if(randomOp==1 && venusaurHP!==0){
 }
 }
 
+function startGame(){
+  document.getElementById("tryagain").style.display = "none";
+  document.getElementById("gameOver").style.display = "none";
+  document.getElementById("message").style.display = "block";
+  document.getElementById("select-section").style.display = "block";
+  document.getElementById("player-action").style.display = "flex";
+  document.getElementById("continue").style.display = "none";
+  (document.getElementById("selected-openent")).value = ""
+  document.getElementById("message").innerHTML = "What should Blastoise do?";
+  document.getElementById('charmeleon-name').innerHTML ="charmeleon"
+  document.getElementById('venusaur-name').innerHTML ="venusaur"
+  document.getElementById('opponent2').style.display = "block" ;
+  document.getElementById('opponent1').style.display = "block" ;
+  document.getElementById('player').style.display = "block" ;
+  document.getElementById('myHP').innerHTML = 100;
+  document.getElementById('charmeleonHP').innerHTML = 100;
+  document.getElementById('venusaurHP').innerHTML = 100;
+  userHP = 100;
+  venusaurHP = 100;
+ charmeleonHP = 100;
+ playerMove=0;
+}
       </script>
 </body>
 </html>
