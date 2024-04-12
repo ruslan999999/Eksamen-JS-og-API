@@ -344,7 +344,9 @@
             document.getElementById("opponent1").style.display = "none";
             document.getElementById("select-section").style.display = "none";
             document.getElementById("selected-openent").value = "charmeleon";
-            var audio = new Audio("./win.wav");
+            var audio = new Audio(
+            "https://assets.mixkit.co/active_storage/sfx/600/600.wav"
+          );
             audio.play();
           }
         } else if (selected_opponent == "charmeleon") {
@@ -361,7 +363,9 @@
             document.getElementById("opponent2").style.display = "none";
             document.getElementById("select-section").style.display = "none";
             document.getElementById("selected-openent").value = "venusaur";
-            var audio = new Audio("./win.wav");
+            var audio = new Audio(
+            "https://assets.mixkit.co/active_storage/sfx/600/600.wav"
+          );
             audio.play();
           }
         } else {
@@ -789,7 +793,9 @@
       }
 
       function gameOver() {
-        var audio = new Audio("./gameover.wav");
+        var audio = new Audio(
+        "https://cdn.pixabay.com/download/audio/2021/08/04/audio_382b1ec1f7.mp3?filename=game-over-arcade-6435.mp3"
+      );
         audio.play();
         document.getElementById("continue").style.display = "none";
         document.getElementById("player-action").style.display = "none";
@@ -802,7 +808,9 @@
       }
 
       function gameWin() {
-        var audio = new Audio("./win.wav");
+        var audio = new Audio(
+        "https://assets.mixkit.co/active_storage/sfx/600/600.wav"
+      );
         audio.play();
         document.getElementById("tryagain").style.display = "block";
         document.getElementById("gameOver").style.display = "block";
